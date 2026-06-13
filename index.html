@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <title>SRS</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%A0%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Every third-party dependency is pinned to an exact version here (ADR-0003).
+       ?external=preact makes preact/hooks share the single preact instance. -->
+  <script type="importmap">
+  {
+    "imports": {
+      "preact": "https://esm.sh/preact@10.29.2",
+      "preact/hooks": "https://esm.sh/preact@10.29.2/hooks?external=preact",
+      "htm": "https://esm.sh/htm@3.1.1",
+      "ts-fsrs": "https://esm.sh/ts-fsrs@5.4.1",
+      "marked": "https://esm.sh/marked@18.0.5"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <noscript>SRS needs JavaScript enabled.</noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
