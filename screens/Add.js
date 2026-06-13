@@ -1,10 +1,10 @@
 // Add — two paths into one ingest function (ADR-0004): a tolerant paste box
 // (single object or array, JSONC allowed) and a manual form with reused tag
 // chips. Both build cards via lib/ingest and safe-write an append.
-import { useState, useMemo } from 'preact/hooks';
+import { useState, useMemo, useEffect } from 'preact/hooks';
 import { html } from '../lib/html.js';
 import { TagEditor } from '../components/TagEditor.js';
-import { ingestPaste, buildCard } from '../lib/ingest.js';
+import { ingestPaste, buildCard, parseAuthoringText } from '../lib/ingest.js';
 
 const PLACEHOLDER = `Paste authoring-shape JSON — one card or an array.
 // comments and trailing commas are fine.
@@ -17,7 +17,7 @@ const PLACEHOLDER = `Paste authoring-shape JSON — one card or an array.
 }`;
 
 export function Add({ cards, write }) {
-  const [tab, setTab] = useState('paste');
+  const [tab, setTab] = useState('manual');
   const allTags = useMemo(() => {
     const s = new Set();
     cards.forEach((c) => (c.tags || []).forEach((t) => s.add(t)));
@@ -85,6 +85,33 @@ function ManualForm({ write, allTags }) {
   const [source, setSource] = useState('');
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState(null);
+
+  // Ctrl/Cmd+V of authoring-shape JSON fills the fields instead of dumping raw
+  // text into the focused box. Non-JSON (or JSON that isn't a card) pastes
+  // normally. Listener lives only while the manual tab is mounted.
+  useEffect(() => {
+    function onPaste(e) {
+      const text = (e.clipboardData || window.clipboardData)?.getData('text');
+      if (!text || !text.trim()) return;
+      let items;
+      try { items = parseAuthoringText(text); } catch { return; } // not JSON -> normal paste
+      const first = items[0];
+      if (!first || typeof first !== 'object' || (!('question' in first) && !('answer' in first))) return;
+      e.preventDefault();
+      setQuestion(typeof first.question === 'string' ? first.question : '');
+      setAnswer(typeof first.answer === 'string' ? first.answer : '');
+      setTags(Array.isArray(first.tags) ? first.tags.filter((t) => typeof t === 'string') : []);
+      setSource(typeof first.source === 'string' ? first.source : '');
+      setMsg({
+        type: 'success',
+        text: items.length > 1
+          ? `Filled from the first of ${items.length} cards — use the Paste tab to add all ${items.length} at once.`
+          : 'Filled fields from pasted JSON.',
+      });
+    }
+    document.addEventListener('paste', onPaste);
+    return () => document.removeEventListener('paste', onPaste);
+  }, []);
 
   async function submit(e) {
     e.preventDefault();
