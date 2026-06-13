@@ -19,5 +19,26 @@
     "lapses": 0,
     "state": "learning",
     "last_review": "2026-06-13T20:23:18.390Z"
+  },
+  {
+    "id": "1ddec457-f400-4b41-9143-42ab4c34b5bb",
+    "question": "embedding",
+    "answer": "A dense vector of floats that represents a piece of data (text, image, etc.) in a learned semantic space, where distance between vectors reflects similarity in meaning. It turns unstructured input into fixed length numbers you can search, cluster, or feed to downstream models, and it is the basis of semantic (vector) retrieval in RAG.",
+    "tags": [
+      "AI",
+      "ML"
+    ],
+    "source": "https://developers.google.com/machine-learning/crash-course/embeddings",
+    "created": "2026-06-13T20:24:07.235Z",
+    "due": "2026-06-13T20:24:07.235Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
   }
 ]
