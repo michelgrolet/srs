@@ -30,15 +30,15 @@
     ],
     "source": "https://developers.google.com/machine-learning/crash-course/embeddings",
     "created": "2026-06-13T20:24:07.235Z",
-    "due": "2026-06-13T20:24:07.235Z",
-    "stability": 0,
-    "difficulty": 0,
+    "due": "2026-06-13T20:25:29.641Z",
+    "stability": 0.212,
+    "difficulty": 6.4133,
     "elapsed_days": 0,
     "scheduled_days": 0,
     "learning_steps": 0,
-    "reps": 0,
+    "reps": 1,
     "lapses": 0,
-    "state": "new",
-    "last_review": null
+    "state": "learning",
+    "last_review": "2026-06-13T20:24:29.641Z"
   }
 ]
