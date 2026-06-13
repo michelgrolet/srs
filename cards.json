@@ -9,15 +9,15 @@
     ],
     "source": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
     "created": "2026-06-13T19:58:30.307Z",
-    "due": "2026-06-13T19:58:30.307Z",
-    "stability": 0,
-    "difficulty": 0,
+    "due": "2026-06-13T20:29:18.390Z",
+    "stability": 1.2931,
+    "difficulty": 5.11217071,
     "elapsed_days": 0,
     "scheduled_days": 0,
     "learning_steps": 0,
-    "reps": 0,
+    "reps": 1,
     "lapses": 0,
-    "state": "new",
-    "last_review": null
+    "state": "learning",
+    "last_review": "2026-06-13T20:23:18.390Z"
   }
 ]
