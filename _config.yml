@@ -1,0 +1,12 @@
+# GitHub Pages publishes a PUBLIC site even when the repo is private (free plan).
+# A raw build would serve cards.json (the user's personal data) at a public URL.
+# The app only ever reads cards.json through the authenticated GitHub Contents
+# API (api.github.com), never from this Pages origin, so we exclude it — and the
+# internal design docs — from the published site. Everything else (index.html,
+# app.js, styles.css, lib/, components/, screens/) is copied as-is; none of our
+# files carry YAML front matter, so Jekyll does not transform them.
+exclude:
+  - cards.json
+  - docs
+  - CONTEXT.md
+  - README.md
