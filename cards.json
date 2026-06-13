@@ -82,5 +82,26 @@
     "lapses": 0,
     "state": "new",
     "last_review": null
+  },
+  {
+    "id": "f7180c6c-9db4-4b5e-ae51-8cc6ecf675ad",
+    "question": "DPO (Direct Preference Optimization)",
+    "answer": "A simpler alternative to RLHF that trains the model directly on preference pairs (chosen vs rejected) with a single classification-style loss, skipping the separate reward model and the RL loop. Same goal as RLHF, fewer moving parts and more stable to train.",
+    "tags": [
+      "AI",
+      "LLM"
+    ],
+    "source": "https://arxiv.org/abs/2305.18290",
+    "created": "2026-06-13T20:31:52.251Z",
+    "due": "2026-06-13T20:31:52.251Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
   }
 ]
