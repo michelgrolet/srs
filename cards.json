@@ -40,5 +40,26 @@
     "lapses": 0,
     "state": "learning",
     "last_review": "2026-06-13T20:24:29.641Z"
+  },
+  {
+    "id": "f0b665ab-4619-4610-b96d-011776cb313b",
+    "question": "SFT (supervised fine-tuning)",
+    "answer": "Fine-tuning a base model on curated (prompt, ideal-response) pairs so it learns to follow instructions in the desired format and style. Also called instruction tuning, it is the first post-training step and the foundation the later preference-optimization steps build on.",
+    "tags": [
+      "AI",
+      "LLM"
+    ],
+    "source": "https://arxiv.org/abs/2203.02155",
+    "created": "2026-06-13T20:30:55.068Z",
+    "due": "2026-06-13T20:30:55.068Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
   }
 ]
