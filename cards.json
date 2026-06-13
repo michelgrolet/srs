@@ -103,5 +103,26 @@
     "lapses": 0,
     "state": "new",
     "last_review": null
+  },
+  {
+    "id": "dbab45a4-8d28-4fed-bf9f-bd183368986f",
+    "question": "quantization",
+    "answer": "Representing a model's weights (and often activations) with a lower-precision data type, e.g. converting FP32/FP16 to INT8 or INT4, to shrink the memory footprint and speed up inference. The cost is some loss of accuracy (quantization error), so the aim is the lowest precision that still holds quality.",
+    "tags": [
+      "AI",
+      "ML"
+    ],
+    "source": "https://www.ibm.com/think/topics/quantization",
+    "created": "2026-06-13T20:38:12.161Z",
+    "due": "2026-06-13T20:38:12.161Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
   }
 ]
