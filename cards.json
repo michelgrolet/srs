@@ -61,5 +61,26 @@
     "lapses": 0,
     "state": "new",
     "last_review": null
+  },
+  {
+    "id": "2253d3ae-4abf-4531-a740-17a80d36275e",
+    "question": "RLHF (Reinforcement Learning from Human Feedback)",
+    "answer": "Train a reward model on human preference rankings of model outputs, then optimize the model (the policy) against that reward, typically with PPO, to align its behavior with human preferences. It is how a base model becomes a helpful, harmless assistant.",
+    "tags": [
+      "AI",
+      "LLM"
+    ],
+    "source": "https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback",
+    "created": "2026-06-13T20:31:12.844Z",
+    "due": "2026-06-13T20:31:12.844Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
   }
 ]
