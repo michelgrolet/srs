@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "9f801286-1b72-46d0-b56c-a3c758647025",
+    "question": "RAG",
+    "answer": "Retrieval-Augmented Generation: before the model generates, the system retrieves relevant documents (usually by embedding similarity) and inserts them into the prompt as context, so the output is grounded in that retrieved evidence rather than the model's weights alone. It is how you give an LLM private or current knowledge without retraining.",
+    "tags": [
+      "AI",
+      "LLM"
+    ],
+    "source": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
+    "created": "2026-06-13T19:58:30.307Z",
+    "due": "2026-06-13T19:58:30.307Z",
+    "stability": 0,
+    "difficulty": 0,
+    "elapsed_days": 0,
+    "scheduled_days": 0,
+    "learning_steps": 0,
+    "reps": 0,
+    "lapses": 0,
+    "state": "new",
+    "last_review": null
+  }
+]
