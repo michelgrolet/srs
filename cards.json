@@ -9,16 +9,16 @@
     ],
     "source": "https://en.wikipedia.org/wiki/Retrieval-augmented_generation",
     "created": "2026-06-13T19:58:30.307Z",
-    "due": "2026-06-13T20:29:18.390Z",
-    "stability": 1.2931,
-    "difficulty": 5.11217071,
-    "elapsed_days": 0,
+    "due": "2026-06-15T18:44:21.981Z",
+    "stability": 0.40717516,
+    "difficulty": 8.37863212,
+    "elapsed_days": 2,
     "scheduled_days": 0,
     "learning_steps": 0,
-    "reps": 1,
+    "reps": 2,
     "lapses": 0,
     "state": "learning",
-    "last_review": "2026-06-13T20:23:18.390Z"
+    "last_review": "2026-06-15T18:43:21.981Z"
   },
   {
     "id": "1ddec457-f400-4b41-9143-42ab4c34b5bb",
