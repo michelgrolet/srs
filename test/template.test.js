@@ -20,6 +20,7 @@ test('the public UI identifies itself as a demo and links to the template', () =
   assert.match(app, /Local demo/);
   assert.match(app, /Get the template/);
   assert.match(readme, /Create your own copy/);
+  assert.match(readme, /codex plugin add srs@srs/);
 });
 
 test('a shared config file selects a non-default personal repository', () => {

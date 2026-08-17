@@ -55,6 +55,9 @@ npx --yes --package git+https://github.com/michelgrolet/srs.git srs-mcp
 Codex and Claude Code can install the repository as a plugin through its `.codex-plugin`, `.claude-plugin`, and `.mcp.json` manifests. With TARS:
 
 ```bash
+codex plugin marketplace add michelgrolet/srs
+codex plugin add srs@srs
+
 claude plugin marketplace add michelgrolet/tars
 claude plugin install srs@tars
 ```

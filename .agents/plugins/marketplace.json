@@ -1,0 +1,20 @@
+{
+  "name": "srs",
+  "interface": {
+    "displayName": "SRS"
+  },
+  "plugins": [
+    {
+      "name": "srs",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
