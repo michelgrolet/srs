@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "srs",
+  "version": "1.0.0",
+  "description": "A tiny spaced-repetition stack shared by a web app and your agent.",
+  "author": {
+    "name": "Michel Grolet",
+    "url": "https://github.com/michelgrolet"
+  },
+  "homepage": "https://michelgrolet.github.io/srs/",
+  "repository": "https://github.com/michelgrolet/srs",
+  "license": "MIT",
+  "keywords": ["memory", "learning", "flashcards", "fsrs", "mcp"],
+  "skills": ["./skills"],
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "srs": {
+      "command": "npx",
+      "args": [
+        "--yes",
+        "--package",
+        "git+https://github.com/michelgrolet/srs.git",
+        "srs-mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "srs-mcp",
+  "version": "1.0.0",
+  "description": "A tiny spaced-repetition system for humans and their agents.",
+  "type": "module",
+  "bin": {
+    "srs-mcp": "./server/index.js"
+  },
+  "scripts": {
+    "mcp": "node server/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "mcp",
+    "spaced-repetition",
+    "flashcards",
+    "fsrs"
+  ],
+  "author": "Michel Grolet",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michelgrolet/srs.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "^2.0.0",
+    "ts-fsrs": "5.4.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "^2.0.0"
+  }
+}
