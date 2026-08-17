@@ -7,6 +7,8 @@ description: Use when the user wants to remember, learn, revise, make flashcards
 
 Use the SRS MCP tools. Keep the interaction short.
 
+This plugin reads the user's own repository. The public `michelgrolet/srs` repository is a template and demo, never their personal stack. If their repository is not named `srs`, configure it once in `~/.config/srs/config.json` as `{ "repository": "owner/repo" }`.
+
 ## Creating cards
 
 1. Call `list_tags` first.

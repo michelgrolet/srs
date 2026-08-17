@@ -2,6 +2,7 @@ import { render } from 'preact';
 import { useState, useEffect, useMemo, useCallback } from 'preact/hooks';
 import { html } from './lib/html.js';
 import { loadRepository, loadToken, saveToken, clearToken } from './lib/store-v2.js';
+import { freshDemoCards } from './lib/demo-cards.js';
 import { makeGitHub, GitHubError } from './lib/github.js';
 import { isNew, isDue } from './lib/fsrs.js';
 import { Study } from './screens/Study.js';
@@ -32,7 +33,7 @@ function Connect({ repository, tokenSet, onSave, onClear, onCancel }) {
         </label>
         <div class="row">
           <button class="btn-primary" disabled=${!value.trim()} type="submit">Connect <span class="kbd">Enter</span></button>
-          ${tokenSet ? html`<button class="btn-quiet" type="button" onClick=${onCancel}>Cancel</button>` : null}
+          <button class="btn-quiet" type="button" onClick=${onCancel}>${tokenSet ? 'Cancel' : 'Back to demo'}</button>
           ${tokenSet ? html`<button class="btn-danger" type="button" onClick=${onClear}>Forget token</button>` : null}
         </div>
       </form>
@@ -41,9 +42,9 @@ function Connect({ repository, tokenSet, onSave, onClear, onCancel }) {
 
 function App() {
   const repository = useMemo(loadRepository, []);
-  const [token, setToken] = useState(loadToken);
+  const [token, setToken] = useState(() => loadToken(repository));
   const [screen, setScreen] = useState('review');
-  const [cards, setCards] = useState(null);
+  const [cards, setCards] = useState(() => token ? null : freshDemoCards());
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [authError, setAuthError] = useState(false);
@@ -73,14 +74,18 @@ function App() {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
       if (event.target && /^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)) return;
       const next = { r: 'review', a: 'add', b: 'browse' }[event.key.toLowerCase()];
-      if (next && configured) setScreen(next);
+      if (next) setScreen(next);
     }
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [configured]);
+  }, []);
 
   const write = useCallback(async (mutate, message) => {
-    if (!api) throw new Error('Connect this browser first.');
+    if (!api) {
+      const next = mutate(cards || []);
+      setCards(next);
+      return next;
+    }
     try {
       const next = await api.safeWrite(mutate, message);
       setCards(next);
@@ -92,24 +97,25 @@ function App() {
       setError(caught.message || String(caught));
       throw caught;
     }
-  }, [api]);
+  }, [api, cards]);
 
   function persistToken(next) {
-    saveToken(next);
-    setToken(loadToken());
+    saveToken(repository, next);
+    setToken(loadToken(repository));
+    setCards(null);
     setAuthError(false);
     setScreen('review');
   }
   function forgetToken() {
-    clearToken();
+    clearToken(repository);
     setToken('');
-    setCards(null);
+    setCards(freshDemoCards());
     setAuthError(false);
     setError(null);
   }
 
   const dueCount = useMemo(() => cards ? cards.filter((card) => isNew(card) || isDue(card, new Date())).length : 0, [cards]);
-  const effectiveScreen = configured ? screen : 'connect';
+  const effectiveScreen = screen;
 
   function renderScreen() {
     if (effectiveScreen === 'connect') return html`<${Connect} repository=${repository} tokenSet=${configured}
@@ -126,11 +132,11 @@ function App() {
     <div class="sky" aria-hidden="true"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="grain"></i></div>
     <div class="app">
       <header class="topbar">
-        <button class="brand" onClick=${() => configured && setScreen('review')}><span class="brand-mark">S</span><span>SRS</span></button>
+        <button class="brand" onClick=${() => setScreen('review')}><span class="brand-mark">S</span><span>SRS</span>${!configured ? html`<span class="demo-pill">Demo</span>` : null}</button>
         <div class="stack-stat">${cards ? html`<strong>${cards.length}</strong> cards · <strong>${dueCount}</strong> due` : 'one stack'}</div>
         <nav class="nav" aria-label="Main navigation">
           ${SCREENS.map((item) => html`
-            <button class=${'nav-btn' + (effectiveScreen === item.id ? ' active' : '')} disabled=${!configured} onClick=${() => setScreen(item.id)}>
+            <button class=${'nav-btn' + (effectiveScreen === item.id ? ' active' : '')} onClick=${() => setScreen(item.id)}>
               <span>${item.label}</span><span class="kbd">${item.hint}</span>
               ${item.id === 'review' && dueCount > 0 ? html`<span class="badge">${dueCount}</span>` : null}
             </button>`)}
@@ -138,6 +144,7 @@ function App() {
             title="Connection" aria-label="Connection" onClick=${() => setScreen('connect')}>⌁</button>
         </nav>
       </header>
+      ${!configured ? html`<div class="demo-banner"><span>Local demo. Changes reset when you reload.</span><a href="https://github.com/michelgrolet/srs" target="_blank" rel="noreferrer">Get the template ↗</a></div>` : null}
       ${authError ? html`<div class="banner banner-error">Your token expired. <button class="text-link" onClick=${() => setScreen('connect')}>Replace it</button></div>` : null}
       ${error && !authError ? html`<div class="banner banner-error">${error} <button class="text-link" onClick=${reload}>Retry</button></div>` : null}
       <main class=${`main screen-${effectiveScreen}`}>${renderScreen()}</main>

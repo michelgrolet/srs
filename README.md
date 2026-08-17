@@ -1,10 +1,20 @@
-# SRS
+# SRS template
 
-A personal spaced-repetition system shared by a minimal web app and an MCP server. The repo itself is the database: every card and its FSRS schedule lives in [`cards.json`](cards.json), read and written safely through the GitHub Contents API. There is no hosted backend and the browser app has no build step.
+A cloneable spaced-repetition system shared by a minimal web app and an MCP server. Your copy of the repo is the database: every card and its FSRS schedule lives in [`cards.json`](cards.json), read and written safely through the GitHub Contents API. There is no hosted backend and the browser app has no build step.
 
-**Live app:** https://michelgrolet.github.io/srs/
+**[Try the demo](https://michelgrolet.github.io/srs/)** · **[Create your own copy](https://github.com/new?template_name=srs&template_owner=michelgrolet)**
 
-## First-time setup (one human step)
+The online app is a local-only demo with sample cards. It never writes to Michel's stack. Create a repository from this template to get your own MCP, cards, and optional web app.
+
+## Create your stack
+
+1. Click **Create your own copy** above. Keep the repository name `srs` for zero configuration.
+2. Clone your repository and run `gh auth login` once.
+3. Add the MCP command below to your agent. It finds `your-account/srs` automatically.
+
+If you enable GitHub Pages from the repository root, the web app detects the owner and repository from its URL. No code change is needed.
+
+## Optional web app connection
 
 The app needs a token to read and write your cards. Mint a **fine-grained
 personal access token** scoped to this repo only:
@@ -16,7 +26,7 @@ personal access token** scoped to this repo only:
 3. **Permissions → Repository → Contents:** *Read and write*. (Metadata: Read is
    added automatically. Nothing else.)
 4. Set an expiry (e.g. 1 year), generate, and copy the `github_pat_…` value.
-5. Open the live app and paste the token once. The repository is already fixed in the app, so there is nothing else to configure.
+5. Open your GitHub Pages app and paste the token once. The app detects your cloned repository from its URL.
 
 The token is stored in your browser's `localStorage` and sent only to
 `api.github.com`. When it expires the app shows a "token expired" banner — mint a
@@ -49,7 +59,7 @@ claude plugin marketplace add michelgrolet/tars
 claude plugin install srs@tars
 ```
 
-Set `SRS_GITHUB_REPOSITORY=owner/repo` only when the repository is not named `srs`. `SRS_GITHUB_TOKEN`, `GH_TOKEN`, and `SRS_GITHUB_BRANCH` are optional overrides.
+Set `SRS_GITHUB_REPOSITORY=owner/repo` only when the repository is not named `srs`. You can also put `{ "repository": "owner/repo" }` in `~/.config/srs/config.json`; both Codex and Claude Code will use it. `SRS_GITHUB_TOKEN`, `GH_TOKEN`, and `SRS_GITHUB_BRANCH` are optional overrides.
 
 ## Develop locally
 

@@ -1,4 +1,6 @@
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { homedir } from 'node:os';
 
 function run(command, args) {
   try {
@@ -13,12 +15,16 @@ function run(command, args) {
 }
 
 export function loadGitHubConfig(env = process.env) {
+  let file = {};
+  try {
+    file = JSON.parse(readFileSync(env.SRS_CONFIG_PATH || `${homedir()}/.config/srs/config.json`, 'utf8'));
+  } catch {}
   const token = env.SRS_GITHUB_TOKEN || env.GH_TOKEN || env.GITHUB_TOKEN || run('gh', ['auth', 'token']);
   if (!token) {
     throw new Error('SRS needs GitHub access. Run `gh auth login`, then restart your agent.');
   }
 
-  let repository = env.SRS_GITHUB_REPOSITORY || '';
+  let repository = env.SRS_GITHUB_REPOSITORY || file.repository || '';
   if (!repository) {
     const owner = run('gh', ['api', 'user', '--jq', '.login']);
     if (owner) repository = `${owner}/srs`;
@@ -31,7 +37,7 @@ export function loadGitHubConfig(env = process.env) {
   return {
     owner: match[1],
     repo: match[2],
-    branch: env.SRS_GITHUB_BRANCH || 'main',
+    branch: env.SRS_GITHUB_BRANCH || file.branch || 'main',
     token,
   };
 }
