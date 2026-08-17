@@ -1,20 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadGitHubConfig } from '../server/config.js';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
+const isPersonalInstance = existsSync(join(root, '.srs-instance.json'));
 
-test('the public database contains synthetic demo cards only', () => {
+test('the public database contains synthetic demo cards only', { skip: isPersonalInstance }, () => {
   const cards = JSON.parse(readFileSync(join(root, 'cards.json'), 'utf8'));
   assert.equal(cards.length, 3);
   assert.equal(cards.every((card) => card.id.startsWith('demo-') && card.source === 'SRS demo'), true);
 });
 
-test('the public UI identifies itself as a demo and links to the template', () => {
+test('the public UI identifies itself as a demo and links to the template', { skip: isPersonalInstance }, () => {
   const app = readFileSync(join(root, 'app-v2.js'), 'utf8');
   const readme = readFileSync(join(root, 'README.md'), 'utf8');
   assert.match(app, /Local demo/);
