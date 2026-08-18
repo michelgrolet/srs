@@ -5,7 +5,7 @@ import { loadRepository, loadToken, saveToken, clearToken } from './lib/store-v2
 import { freshDemoCards } from './lib/demo-cards.js';
 import { makeGitHub, GitHubError } from './lib/github.js';
 import { isNew, isDue } from './lib/fsrs.js';
-import { Study } from './screens/Study.js';
+import { Study } from './screens/Study.js?v=tag-reviews';
 import { AddCard } from './screens/AddCard.js';
 import { BrowseCards } from './screens/BrowseCards.js';
 
