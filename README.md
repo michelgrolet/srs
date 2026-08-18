@@ -34,7 +34,7 @@ new one and re-paste. See [ADR-0005](docs/adr/0005-browser-auth-scoped-pat.md).
 
 ## Using it
 
-- **Review** — every due card, then new cards. **Space** reveals the answer; **1–4** rate Again, Hard, Good, or Easy and show the next interval.
+- **Review** — every due card, then new cards, across the whole stack or filtered by tag. **Space** reveals the answer; **1–4** rate Again, Hard, Good, or Easy and show the next interval.
 - **Add** — one question, one answer, optional source, and tag autocomplete that puts existing categories first.
 - **Browse** — search with **/**, filter by tag, edit, or delete.
 - **Navigate** — **R**, **A**, and **B** switch between Review, Add, and Browse. The shortcuts stay visible on screen.

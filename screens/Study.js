@@ -1,21 +1,18 @@
 import { useState, useEffect, useMemo, useCallback } from 'preact/hooks';
 import { html } from '../lib/html.js';
 import { Markdown } from '../components/Markdown.js';
-import { previewRatings, applyRating, ratingLabel, isDue, isNew } from '../lib/fsrs.js';
+import { previewRatings, applyRating, ratingLabel, isNew } from '../lib/fsrs.js';
 import { formatInterval, formatDue } from '../lib/format.js';
-
-function buildQueue(cards, now = new Date()) {
-  const due = cards
-    .filter((card) => !isNew(card) && isDue(card, now))
-    .sort((a, b) => new Date(a.due) - new Date(b.due));
-  return [...due, ...cards.filter(isNew)].map((card) => card.id);
-}
+import { ALL_REVIEW_TAGS, buildReviewQueue, filterReviewCards, listReviewTags } from '../lib/review.js';
 
 export function Study({ cards, write, onAdd }) {
-  const [queue, setQueue] = useState(() => buildQueue(cards));
+  const [selectedTag, setSelectedTag] = useState(ALL_REVIEW_TAGS);
+  const [queue, setQueue] = useState(() => buildReviewQueue(cards));
   const [position, setPosition] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [rating, setRating] = useState(false);
+  const tags = useMemo(() => listReviewTags(cards), [cards]);
+  const scopedCards = useMemo(() => filterReviewCards(cards, selectedTag), [cards, selectedTag]);
   const card = useMemo(() => {
     const id = queue[position];
     return id ? cards.find((item) => item.id === id) || null : null;
@@ -25,6 +22,14 @@ export function Study({ cards, write, onAdd }) {
   useEffect(() => {
     if (position < queue.length && !card) setPosition((current) => current + 1);
   }, [position, queue, card]);
+
+  function chooseTag(tag) {
+    if (tag === selectedTag) return;
+    setSelectedTag(tag);
+    setQueue(buildReviewQueue(cards, { tag }));
+    setPosition(0);
+    setRevealed(false);
+  }
 
   const rate = useCallback(async (value) => {
     if (!card || rating) return;
@@ -59,25 +64,41 @@ export function Study({ cards, write, onAdd }) {
     return () => window.removeEventListener('keydown', onKey);
   }, [card, revealed, previews, rate]);
 
+  const tagFilters = tags.length ? html`
+    <div class="review-scope">
+      <span class="review-scope-label">Review</span>
+      <div class="review-filter" role="group" aria-label="Filter review cards by tag">
+        <button class=${selectedTag === ALL_REVIEW_TAGS ? 'filter-chip active' : 'filter-chip'}
+          aria-pressed=${selectedTag === ALL_REVIEW_TAGS} onClick=${() => chooseTag(ALL_REVIEW_TAGS)}>All</button>
+        ${tags.map((tag) => html`
+          <button class=${selectedTag === tag ? 'filter-chip active' : 'filter-chip'}
+            aria-pressed=${selectedTag === tag} onClick=${() => chooseTag(tag)}>${tag}</button>`)}
+      </div>
+    </div>` : null;
+
   if (!card) {
     const now = new Date();
-    const nextDue = cards
+    const nextDue = scopedCards
       .filter((item) => !isNew(item))
       .map((item) => new Date(item.due))
       .filter((date) => date > now)
       .sort((a, b) => a - b)[0];
     return html`
-      <section class="review-done rise">
-        <div class="done-orbit"><span>✓</span></div>
-        <div class="eyebrow">Stack clear</div>
-        <h1>That’s enough for now.</h1>
-        <p>${cards.length === 0 ? 'Add your first card.' : nextDue ? `Next review ${formatDue(nextDue, now)}.` : 'Nothing scheduled ahead.'}</p>
-        ${cards.length === 0 ? html`<button class="btn-primary" onClick=${onAdd}>Add a card</button>` : null}
+      <section class="review rise">
+        ${tagFilters}
+        <div class="review-done">
+          <div class="done-orbit"><span>✓</span></div>
+          <div class="eyebrow">${selectedTag === ALL_REVIEW_TAGS ? 'Stack clear' : `${selectedTag} clear`}</div>
+          <h1>That’s enough for now.</h1>
+          <p>${cards.length === 0 ? 'Add your first card.' : nextDue ? `Next review ${formatDue(nextDue, now)}.` : 'Nothing scheduled ahead.'}</p>
+          ${cards.length === 0 ? html`<button class="btn-primary" onClick=${onAdd}>Add a card</button>` : null}
+        </div>
       </section>`;
   }
 
   return html`
     <section class="review rise">
+      ${tagFilters}
       <div class="review-top">
         <div class="progress"><span style=${`width:${((position + 1) / queue.length) * 100}%`}></span></div>
         <div class="review-count">${position + 1} / ${queue.length}</div>

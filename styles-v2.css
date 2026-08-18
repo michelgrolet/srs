@@ -83,6 +83,10 @@ h1 { margin: 0; font-size: clamp(32px, 5vw, 58px); line-height: 1.02; letter-spa
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .review { display: flex; flex-direction: column; gap: 18px; }
+.review-scope { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.review-scope-label { flex: none; color: var(--ink-3); font-size: 10px; font-weight: 720; letter-spacing: .16em; text-transform: uppercase; }
+.review-filter { display: flex; gap: 7px; min-width: 0; overflow-x: auto; padding: 2px 1px 4px; scrollbar-width: none; }
+.review-filter::-webkit-scrollbar { display: none; }
 .review-top { display: flex; align-items: center; gap: 14px; }
 .progress { flex: 1; height: 3px; overflow: hidden; border-radius: 99px; background: rgb(255 255 255 / .09); }
 .progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--mint), #c8f5e4); box-shadow: 0 0 16px rgb(146 230 197 / .55); transition: width .4s ease; }
@@ -195,6 +199,8 @@ button:disabled { opacity: .38; cursor: not-allowed; }
   .nav-btn .kbd { color: var(--ink-2); }
   .badge { position: absolute; top: -3px; right: -3px; }
   .main { padding-top: 44px; }
+  .review-scope { align-items: flex-start; flex-direction: column; gap: 7px; }
+  .review-filter { width: 100%; }
   .study-card { min-height: 48vh; padding: 26px; }
   .ratings { grid-template-columns: 1fr 1fr; }
   .section-head { align-items: flex-start; }

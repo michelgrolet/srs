@@ -1,7 +1,7 @@
 # 0007 — Review-session shape
 
 The brief fixed the review screen's inputs ("all due cards plus up to N new
-cards") but left three operational details open. They shape day-to-day behaviour
+cards") but left four operational details open. They shape day-to-day behaviour
 and are awkward to change once the user has habits built around them, so we pin
 them here.
 
@@ -29,6 +29,12 @@ them here.
    starting another session — the All-done screen offers "Start another session"
    when more cards have come due, and re-entering Review rebuilds the queue.
 
+4. **A tag scopes the session before scheduling.** Review defaults to the whole
+   stack and offers every existing tag. Choosing one rebuilds the frozen queue
+   from cards carrying that exact tag, resets the session position, and leaves
+   every other card untouched. The clear state keeps the filters visible so
+   another scope is one click away.
+
 ## Consequences
 
 - The data file needs no session/day state; the schedule is derivable purely
@@ -38,4 +44,4 @@ them here.
 - Because the queue is frozen, a long session won't loop on a card the user
   keeps rating *Again* within the same sitting; that card returns next session.
   If immediate re-drilling of lapses is wanted later, it's a localized change to
-  the queue logic in `screens/Review.js`, not a data-model change.
+  the queue logic in `lib/review.js`, not a data-model change.
